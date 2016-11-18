@@ -40,20 +40,22 @@ class ClinicalClient(SawtoothClient):
             txnid: str The txnid associated with the transaction
 
         """
-        if 'StudyNumber' not in update:
-            update['StudyNumber'] = None
-        if 'StudyDetails' not in update:
-            update['StudyDetails'] = None
-        """
-        if 'CrfId' not in update:
-            update['CrfId'] = None
-        if 'CrfDetails' not in update:
-            update['CrfDetails'] = None
-        if 'ProId' not in update:
-            update['ProId'] = None
-        if 'CrfData' not in update:
-            update['CrfData'] = None
-        """
+        if 'StudyNumber' in update:
+            if 'StudyDetails' not in update:
+                update['StudyDetails'] = None
+
+        if 'CrfId' in update:
+            if 'CrfDetails' not in update:
+                update['CrfDetails'] = None
+            if 'StudyNumber' not in update:
+                update['StudyNumber'] = None
+
+        if 'ProdId' in update:
+            if 'CrfId' not in update:
+                update['CrfId'] = None
+            if 'CrfData' not in update:
+                update['CrfData'] = None
+
         if 'Action' not in update:
             update['Action'] = None
 
@@ -68,7 +70,7 @@ class ClinicalClient(SawtoothClient):
         update = {
             'Action': 'CREATE_STUDY',
             'StudyNumber': study_number,
-            'StudyDetails': 'test' #study_details
+            'StudyDetails': study_details
         }
 
         return self.send_clinical_txn(update)

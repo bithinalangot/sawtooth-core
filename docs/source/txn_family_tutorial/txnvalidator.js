@@ -10,7 +10,7 @@
     ##    "Port" : 5500,
     ##    "HttpPort" : 8800
     ##},
-    "NodeName" : "xo000",
+    "NodeName" : "clinical000",
     "LedgerURL" : "http://localhost:8800/",
 
     ## pick the ledger type
@@ -19,7 +19,7 @@
     ## this setting should only be zero for the initial validator
     "InitialConnectivity": 0,
 
-    ## configuration of the ledger wait time certificate 
+    ## configuration of the ledger wait time certificate
     ## suggested settings for a single node dev environment
     "TargetWaitTime" : 5.0,
     "InitialWaitTime" : 5.0,
@@ -50,7 +50,7 @@
     ## configuration of the transaction families to include
     ## in the validator
     "TransactionFamilies" : [
-        "sawtooth_xo"
+        "sawtooth_clinical"
     ],
 
     ## This value should be set to the identifier which is

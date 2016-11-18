@@ -88,12 +88,10 @@ class ClinicalTransaction(transaction.Transaction):
         LOGGER.debug("minfo: %s", repr(minfo))
         self._study_number = minfo['StudyNumber'] if 'StudyNumber' in minfo else None
         self._study_details = minfo['StudyDetails'] if 'StudyDetails' in minfo else None
-        """
         self._crf_id = minfo['CrfId'] if 'CrfId' in minfo else None
         self._crf_details = minfo['CrfDetails'] if 'CrfDetails' in minfo else None
         self._prod_id = minfo['ProdId'] if 'ProdId' in minfo else None
         self._crf_data = minfo['CrfData'] if 'CrfData' in minfo else None
-        """
         self._action = minfo['Action'] if 'Action' in minfo else None
 
     def __str__(self):
@@ -146,7 +144,7 @@ class ClinicalTransaction(transaction.Transaction):
 
         if self._action  == 'CREATE_STUDY':
             store[self._study_number] = self._study_number
-            store[self._study_details] = 'test'   # self._study_details
+            store[self._study_details['study_name']] = self._study_details
 
         elif self._action == 'CREATE_CRF':
             store[self._crf_id] = self._crf_id
@@ -168,8 +166,8 @@ class ClinicalTransaction(transaction.Transaction):
         result['Action'] = self._action
         if self._study_number is not None and self._study_details is not None:
             result['StudyNumber'] = self._study_number
-            result['StudyDetails'] = 'test' #self._study_details
-        """
+            result['StudyDetails'] = self._study_details
+
         if self._crf_id is not None and self._crf_data is not None:
             result['CrfId'] = self._crf_id
             result['CrfDetails'] = self._crf_details
@@ -178,5 +176,5 @@ class ClinicalTransaction(transaction.Transaction):
             result['CrfId'] = self._crf_id
             result['ProdId'] = self._prod_id
             result['CrfData'] = self._crf_data
-        """
+
         return result
