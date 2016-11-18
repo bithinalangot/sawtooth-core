@@ -40,7 +40,7 @@ class ClinicalClient(SawtoothClient):
             txnid: str The txnid associated with the transaction
 
         """
-        if 'StudyNumber' in update:
+        if 'StudyNumber' in update and 'CrfId' not in update:
             if 'StudyDetails' not in update:
                 update['StudyDetails'] = None
 
@@ -68,21 +68,21 @@ class ClinicalClient(SawtoothClient):
         To create a new study
         """
         update = {
-            'Action': 'CREATE_STUDY',
-            'StudyNumber': study_number,
-            'StudyDetails': study_details
+            'Action':'CREATE_STUDY',
+            'StudyNumber':study_number,
+            'StudyDetails':study_details
         }
 
         return self.send_clinical_txn(update)
 
     def create_crf(self, crf_id, crf_details, study_number):
         """
-        To create a new CRF form within a study.
+        To create a new CRF within a study.
         """
         update = {
             'Action':'CREATE_CRF',
-            'StudyNumber':'study_number',
             'CrfId':crf_id,
+            'StudyNumber':study_number,
             'CrfDetails':crf_details
         }
 
@@ -94,7 +94,7 @@ class ClinicalClient(SawtoothClient):
         """
         update = {
             'Action':'ADD',
-            'CrfId': crf_id,
+            'CrfId':crf_id,
             'ProdId':prod_id,
             'CrfData':crf_data
         }

@@ -148,7 +148,8 @@ class ClinicalTransaction(transaction.Transaction):
 
         elif self._action == 'CREATE_CRF':
             store[self._crf_id] = self._crf_id
-            store[self._crf_details] = self._crf_details
+            store[self._study_number] = self._study_number
+            store[self._crf_details['crf_name']] = self._crf_details
 
         elif self._action == 'ADD':
             store[self._crf_id] = self._crf_id
@@ -164,12 +165,14 @@ class ClinicalTransaction(transaction.Transaction):
         result = super(ClinicalTransaction, self).dump()
 
         result['Action'] = self._action
-        if self._study_number is not None and self._study_details is not None:
+        if self._study_number is not None and \
+                    self._study_details is not None:
             result['StudyNumber'] = self._study_number
             result['StudyDetails'] = self._study_details
 
-        if self._crf_id is not None and self._crf_data is not None:
+        if self._crf_id is not None and self._crf_details is not None:
             result['CrfId'] = self._crf_id
+            result['StudyNumber'] = self._study_number
             result['CrfDetails'] = self._crf_details
 
         if self._prod_id is not None:

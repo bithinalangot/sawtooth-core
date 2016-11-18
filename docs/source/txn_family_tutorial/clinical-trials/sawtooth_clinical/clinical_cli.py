@@ -117,6 +117,11 @@ def add_create_crf_parser(subparsers, parent_parser):
         help='the CRF identifier')
 
     parser.add_argument(
+        'study_number',
+        type=str,
+        help='the CRF identifier')
+
+    parser.add_argument(
         'crf_name',
         type=str,
         help='the CRF name')
@@ -240,8 +245,9 @@ def do_create_study(args, config):
         client.wait_for_commit()
 
 def do_create_crf(args, config):
-    study_number = args.crf_id
-    study_details = {
+    crf_id = args.crf_id
+    study_number = args.study_number
+    crf_details = {
         'crf_name':args.crf_name
     }
 
@@ -251,8 +257,8 @@ def do_create_crf(args, config):
     client = ClinicalClient(base_url=url,
                       keyfile=key_file,
                       disable_client_validation=args.disable_client_validation)
-    client.create_crf(study_number=study_number,\
-                        study_details=study_details)
+    client.create_crf(crf_id=crf_id, study_number=study_number,\
+                        crf_details=crf_details)
 
     if args.wait:
         client.wait_for_commit()
