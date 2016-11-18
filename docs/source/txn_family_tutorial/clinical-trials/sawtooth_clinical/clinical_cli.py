@@ -147,7 +147,7 @@ def add_crf_entry_parser(subparsers, parent_parser):
         help='the CRF identifier')
 
     parser.add_argument(
-        'pro_id',
+        'prod_id',
         type=str,
         help='Procedure ID')
 
@@ -267,7 +267,7 @@ def do_add_crf_entry(args, config):
     crf_id = args.crf_id
     prod_id = args.prod_id
     #Need to read from the file.
-    crf_details = {
+    crf_data = {
         'age': 34
     }
 
@@ -277,8 +277,7 @@ def do_add_crf_entry(args, config):
     client = ClinicalClient(base_url=url,
                       keyfile=key_file,
                       disable_client_validation=args.disable_client_validation)
-    client.add_crf_entry(crf_id=crf_id, prod_id=prod_id, \
-                        crf_details=crf_details)
+    client.add_crf_entry(crf_id=crf_id, prod_id=prod_id, crf_data=crf_data)
 
     if args.wait:
         client.wait_for_commit()
@@ -391,7 +390,7 @@ def main(prog_name=os.path.basename(sys.argv[0]), args=sys.argv[1:]):
         do_create_study(args, config)
     elif args.command == 'create_crf':
         do_create_crf(args, config)
-    elif args.command == 'add':
+    elif args.command == 'add_entry':
         do_add_crf_entry(args, config)
     elif args.command == 'init':
         do_init(args, config)

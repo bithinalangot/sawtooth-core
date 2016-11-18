@@ -44,7 +44,7 @@ class ClinicalClient(SawtoothClient):
             if 'StudyDetails' not in update:
                 update['StudyDetails'] = None
 
-        if 'CrfId' in update:
+        if 'CrfId' in update and 'ProdId' not in update:
             if 'CrfDetails' not in update:
                 update['CrfDetails'] = None
             if 'StudyNumber' not in update:
