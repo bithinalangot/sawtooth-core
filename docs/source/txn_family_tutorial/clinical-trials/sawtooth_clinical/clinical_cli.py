@@ -24,6 +24,7 @@ import os
 import traceback
 import sys
 import pybitcointools
+import csv
 
 from colorlog import ColoredFormatter
 
@@ -266,10 +267,29 @@ def do_create_crf(args, config):
 def do_add_crf_entry(args, config):
     crf_id = args.crf_id
     prod_id = args.prod_id
-    #Need to read from the file.
-    crf_data = {
-        'age': 34
-    }
+    filename = '/project/sawtooth-core/docs/source/txn_family_tutorial/clinical-trials/sawtooth_clinical/%s.csv'%(crf_id)
+    crf_data = {}
+    #The data is currently read from a csv file
+    with open(filename, 'rb') as clinical_data:
+        crf_entry = csv.reader(clinical_data)
+        headers = crf_entry.next()
+        j = 1
+        for row in crf_entry:
+            if row[2] == prod_id:
+                crf_item = {
+                    headers[0]:row[0],
+                    headers[1]:row[1],
+                    headers[2]:row[2],
+                    'data':{}
+                }
+                i = 2
+                while i < (len(headers) - 1):
+                    crf_item['data'][headers[i]] = row[i]
+                    i = i + 1
+
+                crf_data[j] = crf_item
+                j = j + 1
+
 
     url = config.get('DEFAULT', 'url')
     key_file = config.get('DEFAULT', 'key_file')

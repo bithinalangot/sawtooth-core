@@ -153,8 +153,8 @@ class ClinicalTransaction(transaction.Transaction):
 
         elif self._action == 'ADD':
             store[self._crf_id] = self._crf_id
-            store[self._prod_id] = self._prod_id
-            store[self._crf_data] = self._crf_data
+            #store[self._prod_id] = self._prod_id
+            store[self._prod_id] = self._crf_data
 
     def dump(self):
         """Returns a dict with attributes from the transaction object.
